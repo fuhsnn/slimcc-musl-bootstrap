@@ -25,7 +25,7 @@ build_bootstrap_cc() {
 (
  cd slimcc
  mkdir -p "$ROOTFS"/lib/slimcc/
- cp -r ./include "$ROOTFS"/lib/slimcc/
+ cp -r ./slimcc_headers/include "$ROOTFS"/lib/slimcc/
  sed 's|ROOT_DIR|'\"$ROOTFS\"'|g' platform/linux-musl-bootstrap.c > platform.c
  STAGE1_BUILD_CMD=make
  $STAGE1_BUILD_CMD
@@ -71,7 +71,7 @@ get_src https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.gz binutils_src
 }
 
 build_bash() {
-get_src https://ftp.gnu.org/gnu/bash/bash-5.3-beta.tar.gz bash_src
+get_src https://ftp.gnu.org/gnu/bash/bash-5.3-rc1.tar.gz bash_src
 (
  cd bash_src
  configure_gnu_static --enable-static-link --disable-readline --without-bash-malloc
@@ -101,7 +101,7 @@ get_src https://www.mirrorservice.org/sites/download.salixos.org/x86_64/extra-15
 }
 
 build_oksh() {
-get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.6.tar.gz oksh_src
+get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.7.tar.gz oksh_src
 (
  cd oksh_src
  sh ./configure --cc="$STAGE1CC" --enable-static --prefix="$ROOTFS"
@@ -111,7 +111,7 @@ get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.6.tar.gz oksh_src
 }
 
 build_toybox() {
-get_src https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.0.0.tar.gz libtls_src
+get_src https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.1.0.tar.gz libtls_src
 (
  cd libtls_src
  sed -i 's|#if defined(__GNUC__)|#if 1|g' crypto/bn/arch/amd64/bn_arch.h
