@@ -61,7 +61,7 @@ get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19
 }
 
 build_binutils() {
-get_src https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.gz binutils_src
+get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.44.tar.gz binutils_src
 (
  cd binutils_src
  configure_gnu_static --without-mmap --without-zstd --prefix="$ROOTFS" --includedir="$ROOTFS"/usr/include
@@ -71,7 +71,7 @@ get_src https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.gz binutils_src
 }
 
 build_bash() {
-get_src https://ftp.gnu.org/gnu/bash/bash-5.3-rc1.tar.gz bash_src
+get_src https://ftpmirror.gnu.org/gnu/bash/bash-5.3-rc1.tar.gz bash_src
 (
  cd bash_src
  configure_gnu_static --enable-static-link --disable-readline --without-bash-malloc
@@ -81,7 +81,7 @@ get_src https://ftp.gnu.org/gnu/bash/bash-5.3-rc1.tar.gz bash_src
 }
 
 build_gmake() {
-get_src https://ftp.gnu.org/gnu/make/make-4.4.1.tar.gz gmake_src
+get_src https://ftpmirror.gnu.org/gnu/make/make-4.4.1.tar.gz gmake_src
 (
  cd gmake_src
  configure_gnu_static MAKEINFO=true --prefix="$ROOTFS"
