@@ -4,7 +4,22 @@ STAGE1CC=$PWD/slimcc/slimcc
 ROOTFS=$PWD/rfs
 
 get_src() {
- wget "$1" -O "$2".tar.gz
+if ! wget "$1" -O "$2".tar.gz; then
+  sleep 20
+if ! wget "$1" -O "$2".tar.gz; then
+  sleep 20
+if ! wget "$1" -O "$2".tar.gz; then
+  sleep 20
+if ! wget "$1" -O "$2".tar.gz; then
+  sleep 20
+if ! wget "$1" -O "$2".tar.gz; then
+  sleep 20
+fi
+fi
+fi
+fi
+fi
+
  mkdir "$2"
  tar -xf "$2".tar.gz --strip-components=1 -C "$2"
  rm "$2".tar.gz
@@ -71,7 +86,7 @@ get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.44.tar.gz binutils_src
 }
 
 build_bash() {
-get_src https://ftpmirror.gnu.org/gnu/bash/bash-5.3-rc1.tar.gz bash_src
+get_src https://ftpmirror.gnu.org/gnu/bash/bash-5.3.tar.gz bash_src
 (
  cd bash_src
  configure_gnu_static --enable-static-link --disable-readline --without-bash-malloc
