@@ -76,10 +76,11 @@ get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19
 }
 
 build_binutils() {
-get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.44.tar.gz binutils_src
+get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.45.tar.gz binutils_src
 (
  cd binutils_src
- configure_gnu_static --without-mmap --without-zstd --prefix="$ROOTFS" --includedir="$ROOTFS"/usr/include
+ sed -i 's|^# define __attribute__(x)$||g' include/ansidecl.h
+ configure_gnu_static --without-zstd --prefix="$ROOTFS" --includedir="$ROOTFS"/usr/include
  make
  make install
 )
