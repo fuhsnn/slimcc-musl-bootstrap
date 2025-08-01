@@ -2,6 +2,7 @@ set -e -u
 
 STAGE1CC=$PWD/slimcc/slimcc
 ROOTFS=$PWD/rfs
+JOBS=-j1
 
 get_src() {
 if ! wget "$1" -O "$2".tar.gz; then
@@ -63,7 +64,7 @@ get_src https://github.com/bminor/musl/archive/refs/tags/v1.2.5.tar.gz musl_src
  rm -r src/complex/ include/complex.h
  CC="$STAGE1CC" AR=ar RANLIB=ranlib sh ./configure --target=x86_64-linux-musl --prefix="$ROOTFS" --includedir="$ROOTFS"/usr/include --syslibdir=/dev/null
  make
- make install
+ make $JOBS install
 )
 }
 
@@ -71,7 +72,7 @@ build_linux_headers() {
 get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19.88-2.tar.gz kernel_hdr_src
 (
  cd kernel_hdr_src
- make ARCH=x86_64 prefix= DESTDIR="$ROOTFS"/usr install
+ make $JOBS ARCH=x86_64 prefix= DESTDIR="$ROOTFS"/usr install
 )
 }
 
@@ -81,7 +82,7 @@ get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.45.tar.gz binutils_src
  cd binutils_src
  sed -i 's|^# define __attribute__(x)$||g' include/ansidecl.h
  configure_gnu_static --without-zstd --prefix="$ROOTFS" --includedir="$ROOTFS"/usr/include
- make
+ make $JOBS
  make install
 )
 }
@@ -91,7 +92,7 @@ get_src https://ftpmirror.gnu.org/gnu/bash/bash-5.3.tar.gz bash_src
 (
  cd bash_src
  configure_gnu_static --enable-static-link --disable-readline --without-bash-malloc
- make
+ make $JOBS
  cp ./bash "$ROOTFS"/bin/
 )
 }
@@ -101,7 +102,7 @@ get_src https://ftpmirror.gnu.org/gnu/make/make-4.4.1.tar.gz gmake_src
 (
  cd gmake_src
  configure_gnu_static MAKEINFO=true --prefix="$ROOTFS"
- make install
+ make $JOBS install
 )
 }
 
@@ -111,7 +112,7 @@ get_src https://www.mirrorservice.org/sites/download.salixos.org/x86_64/extra-15
 (
  cd mg_src
  configure_gnu_static --without-curses
- make
+ make $JOBS
  cp ./src/mg "$ROOTFS"/bin/
 )
 }
@@ -121,7 +122,7 @@ get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.7.tar.gz oksh_src
 (
  cd oksh_src
  sh ./configure --cc="$STAGE1CC" --enable-static --prefix="$ROOTFS"
- make
+ make $JOBS
  cp ./oksh "$ROOTFS"/bin/sh
 )
 }
@@ -132,7 +133,7 @@ get_src https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.1.0.tar.gz libtl
  cd libtls_src
  sed -i 's|#if defined(__GNUC__)|#if 1|g' crypto/bn/arch/amd64/bn_arch.h
  configure_gnu_static --with-openssldir=/etc/ssl --enable-libtls-only --disable-shared
- make
+ make $JOBS
  mkdir -p "$ROOTFS"/etc/ssl
  cp ./cert.pem "$ROOTFS"/etc/ssl/
  cp ./openssl.cnf "$ROOTFS"/etc/ssl/
