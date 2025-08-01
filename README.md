@@ -19,9 +19,10 @@ toybox
 GNU bash
 GNU binutils
 GNU make
+GNU wget
 OpenBSD mg
 OpenBSD oksh
-OpenBSD libtls (for https support in toybox wget)
+OpenBSD libtls (for wget https support)
 ```
 
 The tools chosen may not be as "minimal" as one expected, however it is the minimum requirement to compile `musl` (needs gmake) and `toybox` (needs bash) without rewriting their build process. As I do this from the perspective of a compiler maintainer, modifying projects to fit minimalism does not interest me as much as improving slimcc to be able to compile their dependencies.
