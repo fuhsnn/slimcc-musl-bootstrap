@@ -5,19 +5,26 @@ ROOTFS=$PWD/rfs
 JOBS=-j1
 
 wget_timeout_noretry() {
- wget -c -4 -T10 -t1 $@
+ wget -c -T30 -t2 $@
+}
+
+wget_loop() {
+ local URL="$1"
+
+ while ! wget_timeout_noretry $URL -O "$2"; do
+  URL=`echo $URL | sed -e 's|mirrors.edge.kernel.org|ftp.gnu.org|g'`
+  URL=`echo $URL | sed -e 's|ftpmirror.gnu.org|mirrors.edge.kernel.org|g'`
+ done
 }
 
 get_src() {
- wget_timeout_noretry "$1" -O "$2".tar.gz ||
- wget_timeout_noretry "$1" -O "$2".tar.gz ||
- wget_timeout_noretry "$1" -O "$2".tar.gz ||
- wget_timeout_noretry "$1" -O "$2".tar.gz ||
- wget_timeout_noretry "$1" -O "$2".tar.gz
-
  mkdir "$2"
- tar -xf "$2".tar.gz --strip-components=1 -C "$2"
- rm "$2".tar.gz
+ local F="$2".tar.gz
+
+ if ! [ -f $F ]; then
+  wget_loop "$1" $F
+ fi
+ tar -xf $F -C "$2" --strip-components=1
 }
 
 fix_configure() {
