@@ -54,7 +54,7 @@ build_cc() {
  cd slimcc
  sed 's|ROOT_DIR|'\"\"'|g' platform/linux-musl-bootstrap.c > platform.c
  mkdir -p "$ROOTFS"/bin
- "$STAGE1CC" *.c -static -o "$ROOTFS"/bin/cc
+ "$STAGE1CC" scripts/amalgamation.c -static -o "$ROOTFS"/bin/cc
 )
 }
 
