@@ -121,7 +121,7 @@ get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.7.tar.gz oksh_src
 }
 
 build_toybox() {
-get_src https://github.com/landley/toybox/archive/refs/tags/0.8.12.tar.gz toybox_src
+get_src https://github.com/landley/toybox/archive/refs/tags/0.8.13.tar.gz toybox_src
 (
  cd toybox_src
  sed -i 's/^#define QUIET$/#define QUIET = 0/g' lib/portability.h
@@ -141,7 +141,7 @@ get_src https://github.com/landley/toybox/archive/refs/tags/0.8.12.tar.gz toybox
 }
 
 build_libtls() {
-get_src https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.1.0.tar.gz libtls_src
+get_src https://github.com/libressl/portable/releases/download/v4.2.0/libressl-4.2.0.tar.gz libtls_src
 (
  cd libtls_src
  sed -i 's|#if defined(__GNUC__)|#if 1|g' crypto/bn/arch/amd64/bn_arch.h
