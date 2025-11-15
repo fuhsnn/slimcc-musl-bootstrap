@@ -2,7 +2,7 @@ set -e -u
 
 STAGE1CC=$PWD/slimcc/slimcc
 ROOTFS=$PWD/rfs
-JOBS=-j1
+JOBS=-j4
 
 wget_timeout_noretry() {
  wget -c -T30 -t2 $@
@@ -78,7 +78,7 @@ get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19
 }
 
 build_binutils() {
-get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.45.tar.gz binutils_src
+get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.45.1.tar.gz binutils_src
 (
  cd binutils_src
  sed -i 's|^# define __attribute__(x)$||g' include/ansidecl.h
@@ -118,7 +118,7 @@ get_src https://github.com/troglobit/mg/releases/download/v3.7/mg-3.7.tar.gz mg_
 }
 
 build_oksh() {
-get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.7.tar.gz oksh_src
+get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.8.tar.gz oksh_src
 (
  cd oksh_src
  sh ./configure --cc="$STAGE1CC" --enable-static --prefix="$ROOTFS"
@@ -148,7 +148,7 @@ get_src https://github.com/landley/toybox/archive/refs/tags/0.8.13.tar.gz toybox
 }
 
 build_libtls() {
-get_src https://github.com/libressl/portable/releases/download/v4.2.0/libressl-4.2.0.tar.gz libtls_src
+get_src https://github.com/libressl/portable/releases/download/v4.2.1/libressl-4.2.1.tar.gz libtls_src
 (
  cd libtls_src
  sed -i 's|#if defined(__GNUC__)|#if 1|g' crypto/bn/arch/amd64/bn_arch.h
