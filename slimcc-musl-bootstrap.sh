@@ -59,7 +59,7 @@ build_cc() {
 }
 
 build_musl() {
-get_src https://github.com/bminor/musl/archive/refs/tags/v1.2.5.tar.gz musl_src
+get_src https://musl.libc.org/releases/musl-1.2.5.tar.gz musl_src
 (
  cd musl_src
  rm -r src/complex/ include/complex.h
@@ -78,7 +78,7 @@ get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19
 }
 
 build_binutils() {
-get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.45.1.tar.gz binutils_src
+get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-with-gold-2.46.tar.gz binutils_src
 (
  cd binutils_src
  sed -i 's|^# define __attribute__(x)$||g' include/ansidecl.h
