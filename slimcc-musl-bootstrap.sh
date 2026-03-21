@@ -59,7 +59,7 @@ build_cc() {
 }
 
 build_musl() {
-get_src https://musl.libc.org/releases/musl-1.2.5.tar.gz musl_src
+get_src https://musl.libc.org/releases/musl-1.2.6.tar.gz musl_src
 (
  cd musl_src
  rm -r src/complex/ include/complex.h
