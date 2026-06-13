@@ -78,7 +78,7 @@ get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19
 }
 
 build_binutils() {
-get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-with-gold-2.46.tar.gz binutils_src
+get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.46.1.tar.gz binutils_src
 (
  cd binutils_src
  sed -i 's|^# define __attribute__(x)$||g' include/ansidecl.h
