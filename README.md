@@ -8,7 +8,8 @@
 ### TL'DR of the bootstrap script
  - build slimcc
  - build musl with the just-built slimcc
- - build the rest of binaries statically linked to the just-built musl, with the just-built slimcc
+ - build binutils with just-built slimcc/musl, statically-linked
+ - build the rest with just-built slimcc/musl/binutils, statically-linked
 
 ### What's included?
 

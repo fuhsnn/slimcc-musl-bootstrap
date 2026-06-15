@@ -174,10 +174,16 @@ get_src https://ftpmirror.gnu.org/gnu/wget/wget2-2.2.0.tar.gz wget_src
 }
 
 build_bootstrap_cc
+
+export PKG_CONFIG=false
+
 build_musl
 build_linux_headers
-build_cc
 build_binutils
+
+export CFLAGS="${CFLAGS:-} -B$ROOTFS/bin/"
+
+build_cc
 build_bash
 build_gmake
 build_mg
