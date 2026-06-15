@@ -167,7 +167,7 @@ get_src https://ftpmirror.gnu.org/gnu/wget/wget2-2.2.0.tar.gz wget_src
  cd wget_src
  export OPENSSL_CFLAGS='-I'"$PWD"'/../libtls_src/include'
  export OPENSSL_LIBS='-L'"$PWD"'/../libtls_src/tls/.libs -ltls'
- configure_gnu_static --with-ssl=openssl
+ configure_gnu_static --with-ssl=openssl PKG_CONFIG=false --without-gpgme
  make $JOBS
  cp ./src/wget2 "$ROOTFS"/bin/wget
 )
