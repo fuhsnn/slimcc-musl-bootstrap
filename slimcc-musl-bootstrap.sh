@@ -70,7 +70,7 @@ get_src https://musl.libc.org/releases/musl-1.2.6.tar.gz musl_src
 }
 
 build_linux_headers() {
-get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19.88-2.tar.gz kernel_hdr_src
+get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v6.12.77.tar.gz kernel_hdr_src
 (
  cd kernel_hdr_src
  make $JOBS ARCH=x86_64 prefix= DESTDIR="$ROOTFS"/usr install
@@ -78,7 +78,7 @@ get_src https://github.com/sabotage-linux/kernel-headers/archive/refs/tags/v4.19
 }
 
 build_binutils() {
-get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.46.1.tar.gz binutils_src
+get_src https://ftpmirror.gnu.org/gnu/binutils/binutils-2.47.tar.gz binutils_src
 (
  cd binutils_src
  sed -i 's|^# define __attribute__(x)$||g' include/ansidecl.h
@@ -108,7 +108,7 @@ get_src https://ftpmirror.gnu.org/gnu/make/make-4.4.1.tar.gz gmake_src
 }
 
 build_mg() {
-get_src https://github.com/troglobit/mg/releases/download/v3.7/mg-3.7.tar.gz mg_src
+get_src https://github.com/troglobit/mg/releases/download/v4.1/mg-4.1.tar.gz mg_src
 (
  cd mg_src
  configure_gnu_static --without-curses --without-docs --without-tutorial
@@ -128,7 +128,7 @@ get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.8.tar.gz oksh_src
 }
 
 build_toybox() {
-get_src https://github.com/landley/toybox/archive/refs/tags/0.8.13.tar.gz toybox_src
+get_src https://github.com/landley/toybox/archive/refs/tags/0.8.14.tar.gz toybox_src
 (
  cd toybox_src
  sed -i 's/^#define QUIET$/#define QUIET = 0/g' lib/portability.h
@@ -140,7 +140,7 @@ get_src https://github.com/landley/toybox/archive/refs/tags/0.8.13.tar.gz toybox
  sed -i 's/^  default y$/  default n/g' toys/net/wget.c
  sed -i 's/^  default y$/  default n/g' toys/other/readelf.c
  sed -i 's/^  default y$/  default n/g' toys/posix/strings.c
- sed -i '111s/.*/\tdefault n/' Config.in # disable TOYBOX_ZHELP
+ sed -i '109s/.*/\tdefault n/' Config.in # disable TOYBOX_ZHELP
 
  make CC="$STAGE1CC" HOSTCC="$STAGE1CC" LDFLAGS='--static' defconfig toybox
  make CC="$STAGE1CC" HOSTCC="$STAGE1CC" PREFIX="$ROOTFS"/bin install_flat
@@ -148,7 +148,7 @@ get_src https://github.com/landley/toybox/archive/refs/tags/0.8.13.tar.gz toybox
 }
 
 build_libtls() {
-get_src https://github.com/libressl/portable/releases/download/v4.2.1/libressl-4.2.1.tar.gz libtls_src
+get_src https://github.com/libressl/portable/releases/download/v4.3.1/libressl-4.3.1.tar.gz libtls_src
 (
  cd libtls_src
  sed -i 's|#if defined(__GNUC__)|#if 1|g' crypto/bn/arch/amd64/bn_arch.h
@@ -162,7 +162,7 @@ get_src https://github.com/libressl/portable/releases/download/v4.2.1/libressl-4
 }
 
 build_wget() {
-get_src https://ftpmirror.gnu.org/gnu/wget/wget2-2.2.0.tar.gz wget_src
+get_src https://ftpmirror.gnu.org/gnu/wget/wget2-2.2.1.tar.gz wget_src
 (
  cd wget_src
  export OPENSSL_CFLAGS='-I'"$PWD"'/../libtls_src/include'
