@@ -108,7 +108,7 @@ get_src https://ftpmirror.gnu.org/gnu/make/make-4.4.1.tar.gz gmake_src
 }
 
 build_mg() {
-get_src https://github.com/troglobit/mg/releases/download/v4.1/mg-4.1.tar.gz mg_src
+get_src https://github.com/troglobit/mg/releases/download/v4.2/mg-4.2.tar.gz mg_src
 (
  cd mg_src
  configure_gnu_static --without-curses --without-docs --without-tutorial
@@ -128,7 +128,7 @@ get_src https://github.com/ibara/oksh/archive/refs/tags/oksh-7.8.tar.gz oksh_src
 }
 
 build_toybox() {
-get_src https://github.com/landley/toybox/archive/refs/tags/0.8.14.tar.gz toybox_src
+get_src https://github.com/landley/toybox/archive/refs/tags/0.8.15.tar.gz toybox_src
 (
  cd toybox_src
  sed -i 's/^#define QUIET$/#define QUIET = 0/g' lib/portability.h
@@ -148,7 +148,7 @@ get_src https://github.com/landley/toybox/archive/refs/tags/0.8.14.tar.gz toybox
 }
 
 build_libtls() {
-get_src https://github.com/libressl/portable/releases/download/v4.3.1/libressl-4.3.1.tar.gz libtls_src
+get_src https://github.com/libressl/portable/releases/download/v4.3.3/libressl-4.3.3.tar.gz libtls_src
 (
  cd libtls_src
  sed -i 's|#if defined(__GNUC__)|#if 1|g' crypto/bn/arch/amd64/bn_arch.h
@@ -162,12 +162,13 @@ get_src https://github.com/libressl/portable/releases/download/v4.3.1/libressl-4
 }
 
 build_wget() {
-get_src https://ftpmirror.gnu.org/gnu/wget/wget2-2.2.1.tar.gz wget_src
+get_src https://ftpmirror.gnu.org/gnu/wget/wget2-2.3.0.tar.gz wget_src
 (
  cd wget_src
  export OPENSSL_CFLAGS='-I'"$PWD"'/../libtls_src/include'
  export OPENSSL_LIBS='-L'"$PWD"'/../libtls_src/tls/.libs -ltls'
- configure_gnu_static --with-ssl=openssl PKG_CONFIG=false --without-gpgme
+ sed -i 's|PKG_CONFIG=""|:|g' ./configure
+ configure_gnu_static --with-ssl=openssl --without-gpgme
  make $JOBS
  cp ./src/wget2 "$ROOTFS"/bin/wget
 )
